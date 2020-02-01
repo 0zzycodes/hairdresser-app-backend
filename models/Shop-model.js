@@ -6,8 +6,7 @@ const ShopSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please add a shop ID'],
     unique: true,
-    trim: true,
-    maxlength: [10, 'Shop ID must be less than 10 chars']
+    trim: true
   },
   address: {
     type: String,
@@ -31,7 +30,7 @@ const ShopSchema = new mongoose.Schema({
 });
 
 // Geocode & create location
-ShopSchema.pre('save', async function (next) {
+ShopSchema.pre('save', async function(next) {
   const loc = await geocoder.geocode(this.address);
   this.location = {
     type: 'Point',
