@@ -1,22 +1,32 @@
 const path = require('path');
 const express = require('express');
+const bodyParser = require('body-parser');
+const helmet = require('helmet');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const route = require('./routes/shop-routes');
+const shopRoute = require('./routes/shop-routes');
+const userRoute = require('./routes/user-routes');
+const pusherRoute = require('./routes/pusher-routes');
 
 // Load env variables
 dotenv.config({
   path: './config.env'
 });
+
 const DB = process.env.DATABASE;
 const app = express();
 // Middlewares
-app.use(express.json());
+// Set security HTTP headers
+app.use(helmet());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 // Routes
 app.get('/', (req, res) => res.send('Server is Running'));
-app.use('/api/v1/shops', route);
+app.use('/pusher', pusherRoute);
+app.use('/api/v1/shops', shopRoute);
+app.use('/api/v1/users', userRoute);
 // End of Middlewares
 // connect DB
 process.on('uncaughtException', err => {
@@ -44,7 +54,7 @@ mongoose
     console.log('DB connection successful');
   });
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 5000;
 const server = app.listen(PORT, () =>
   console.log(`Server is running on port ${PORT}`)
 );
