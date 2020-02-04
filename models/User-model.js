@@ -18,13 +18,13 @@ const userSchema = new mongoose.Schema({
   photo: String,
   role: {
     type: String,
-    enum: ['hair dresser', 'user'],
+    enum: ['hairdresser', 'user'],
     default: 'user'
   },
   service: {
     type: String,
-    enum: ['shop', 'home service'],
-    default: 'shop'
+    enum: ['shop', 'home-service', 'client'],
+    default: 'client'
   },
   password: {
     type: String,
