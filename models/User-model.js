@@ -16,10 +16,6 @@ const userSchema = new mongoose.Schema({
     validate: [validator.isEmail, 'Please provide a valid email']
   },
   photo: String,
-  role: {
-    type: String,
-    enum: ['hairdresser', 'client'],
-  },
   password: {
     type: String,
     required: [true, 'Please provide a password'],
@@ -40,6 +36,10 @@ const userSchema = new mongoose.Schema({
   passwordChangedAt: Date,
   passwordResetToken: String,
   passwordResetExpires: Date,
+  role: {
+    type: String,
+    required: [true, 'Please provide your role']
+  },
   active: {
     type: Boolean,
     default: true,
