@@ -7,7 +7,12 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const shopRoute = require('./routes/shop-routes');
 const userRoute = require('./routes/user-routes');
+// const phoneRoute = require('./routes/phone-routes');
 const pusherRoute = require('./routes/pusher-routes');
+const {
+  getPhoneVerificationCodes,
+  addPhoneVerificationCode
+} = require('./controllers/phone.controller');
 
 // Load env variables
 dotenv.config({
@@ -23,7 +28,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 // Routes
-app.get('/', (req, res) => res.send('Server is Running'));
+app.get('/', (req, res) => res.send('Server is running'));
+app.post('/api/v1/send-code', addPhoneVerificationCode);
+app.post('/api/v1/verify-code', getPhoneVerificationCodes);
 app.use('/pusher', pusherRoute);
 app.use('/api/v1/shops', shopRoute);
 app.use('/api/v1/users', userRoute);
